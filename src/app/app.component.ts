@@ -20,10 +20,6 @@ import { SptransService } from './app.service';
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
-  // ========================================
-  // PROPRIEDADES PÚBLICAS (usadas no HTML)
-  // ========================================
-
   title = 'SPTrans Olho Vivo';
   termoBusca = '';          // O que o usuário digitou na busca
   carregando = false;       // Mostra o spinner de loading
@@ -32,36 +28,25 @@ export class AppComponent implements OnInit, AfterViewInit {
   ultimoErro = '';          // Última mensagem de erro
   marcadoresOnibus: any[] = []; // Lista de marcadores (pública para o HTML)
 
-  // ========================================
-  // PROPRIEDADES PRIVADAS (uso interno)
-  // ========================================
 
   private mapa: any;                    // Objeto do mapa Leaflet
   private L: any;                       // Biblioteca Leaflet
   private isBrowser: boolean;           // Se está rodando no navegador
 
-  /**
-   * CONSTRUTOR
-   * O Angular chama isso primeiro, antes de tudo
-   */
   constructor(
     private sptransService: SptransService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
-    // Verifica se está no navegador (não no servidor)
+    // Verifica se está no navegador
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  /**
-   * CICLO DE VIDA 1: ngOnInit
-   * Chamado depois do construtor, quando o componente é iniciado
-   */
   async ngOnInit(): Promise<void> {
     // Só carrega Leaflet se estiver no navegador
     if (!this.isBrowser) return;
 
     try {
-      // Carrega a biblioteca Leaflet dinamicamente
+      // Carrega a biblioteca Leaflet 
       const leaflet = await import('leaflet');
       this.L = leaflet.default;
       console.log('✅ Leaflet carregado');
@@ -70,26 +55,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * CICLO DE VIDA 2: ngAfterViewInit
-   * Chamado depois que o HTML está pronto
-   */
+
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
-
     // Aguarda um pouco para garantir que tudo está pronto
     setTimeout(() => {
       this.criarMapa();
     }, 100);
   }
 
-  // ========================================
-  // MÉTODOS DO MAPA
-  // ========================================
 
-  /**
-   * Cria e inicializa o mapa Leaflet
-   */
+  // MÉTODOS DO MAPA
+
+  // Cria e inicializa o mapa Leaflet
+
   private criarMapa(): void {
     if (!this.L) {
       console.error('❌ Leaflet não foi carregado');
@@ -119,25 +98,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * Remove todos os marcadores do mapa (método público para o HTML)
-   */
+
   removerMarcadores(): void {
     this.limparMarcadores();
     console.log('🗑️ Marcadores removidos pelo usuário');
   }
-
-  /**
-   * Remove todos os marcadores do mapa (método privado interno)
-   */
   private limparMarcadores(): void {
     if (!this.mapa) return;
-
-    // Remove cada marcador do mapa
     this.marcadoresOnibus.forEach(marcador => {
       this.mapa.removeLayer(marcador);
     });
-
     // Limpa a lista
     this.marcadoresOnibus = [];
   }
@@ -147,7 +117,7 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   private adicionarMarcador(onibus: any, linha: any): void {
     if (!this.L || !this.mapa) return;
-
+    const direcao = (linha.sl == 1) ? linha.tp : linha.ts;
     // 1. Pega as coordenadas
     const lat = parseFloat(onibus.py);
     const lng = parseFloat(onibus.px);
@@ -162,7 +132,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     const popupHtml = `
       <div style="font-family: Arial;">
         <h4>🚌 Linha ${linha.c || 'N/A'}</h4>
-        <p><b>Destino:</b> ${linha.sl || 'N/A'}</p>
+        <p><b>Destino:</b> ${direcao || 'N/A'}</p>
         <p><b>Horário:</b> ${onibus.ta || 'N/A'}</p>
         <p><b>Acessível:</b> ${onibus.a ? '♿ Sim' : 'Não'}</p>
       </div>
@@ -177,10 +147,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.marcadoresOnibus.push(marcador);
   }
 
-  // ========================================
-  // MÉTODOS DE BUSCA
-  // ========================================
 
+
+  
   /**
    * Método principal de busca (chamado pelo botão)
    */
@@ -205,7 +174,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     console.log('🔍 Buscando:', termo);
 
-    // 3. FAZER A REQUISIÇÃO
     this.sptransService.buscarLinhas(termo).subscribe({
       // Quando a requisição der certo
       next: (linhas: any) => {
@@ -227,16 +195,13 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   private processarLinhas(linhas: any, termo: string): void {
     // LOG DETALHADO: Mostra EXATAMENTE o que foi recebido
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('📊 DADOS RECEBIDOS DA API:');
     console.log('Tipo de dados:', typeof linhas);
     console.log('É Array?:', Array.isArray(linhas));
     console.log('Dados completos:', linhas);
     console.log('Length:', linhas?.length);
     console.log('Primeiro item:', linhas?.[0]);
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
-    // 1. Verifica se recebeu dados
     if (!linhas) {
       console.error('❌ Dados vazios/null recebidos');
       alert(`⚠️ API retornou dados vazios para "${termo}"`);
@@ -254,7 +219,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       alert(`⚠️ Nenhuma linha encontrada para "${termo}"`);
       return;
     }
-
+      // senao 
     console.log(`✅ ${linhas.length} linha(s) encontrada(s)`);
     console.log('🔄 Agora buscando posições de cada linha...\n');
 
@@ -266,10 +231,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     linhas.forEach((linha: any, index: number) => {
       console.log(`📍 Linha ${index + 1}/${totalLinhas}:`);
       console.log('  Dados da linha:', linha);
-
-      // Busca o código da linha em diferentes campos possíveis
-      const codigoLinha = linha.cl || linha.c || linha.codigo || linha.codigoLinha;
-
+      // Busca o código da linha em cl
+      const codigoLinha = linha.cl;
       console.log(`  Código extraído (cl): ${codigoLinha}`);
 
       if (!codigoLinha) {
@@ -345,9 +308,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * Mostra uma mensagem de erro amigável
-   */
+
   private mostrarErro(erro: any): void {
     let mensagem = 'Erro ao buscar linhas:\n\n';
 

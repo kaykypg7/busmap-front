@@ -47,14 +47,9 @@ export class SptransService {
         console.log('📡 API URL:', this.baseURL);
     }
 
-    // ========================================
-    // MÉTODOS PÚBLICOS
-    // ========================================
-
-    /**
-     * � Faz login na API SPTrans
-     * @returns Observable com resultado do login (true/false)
-     */
+  
+    //  Faz login na API SPTrans
+   
     login(): Observable<boolean> {
         const url = `${this.baseURL}/login`;
         console.log('🔐 Fazendo login...');
@@ -68,12 +63,7 @@ export class SptransService {
     }
 
     /**
-     * �🔍 BUSCAR LINHAS DE ÔNIBUS
-     * 
-     * Busca linhas de ônibus baseado em um termo (número ou nome)
-     * 
-     * Exemplo de uso:
-     * ```
+     *  BUSCAR LINHAS DE ÔNIBus
      * this.sptransService.buscarLinhas('8000').subscribe(linhas => {
      *     console.log('Linhas encontradas:', linhas);
      * });
@@ -95,15 +85,7 @@ export class SptransService {
     }
 
     /**
-     * 📍 BUSCAR POSIÇÕES DOS ÔNIBUS
-     * 
-     * Busca a posição em tempo real de todos os ônibus de uma linha específica
-     * 
-     * Exemplo de uso:
-     * ```
-     * this.sptransService.buscarPosicoes('1145').subscribe(dados => {
-     *     console.log('Posições:', dados.vs); // vs = array de veículos
-     * });
+     * BUSCAR POSIÇÕES DOS ÔNIBUS
      * ```
      * 
      * @param codigoLinha - Código da linha (ex: '1145', '2506', '8000-10')
