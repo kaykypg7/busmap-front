@@ -1,0 +1,46 @@
+# Arquivos gerados pelo Angular e ferramentas de build
+/.angular/
+/dist/
+/www/
+/coverage/
+/.firebase/
+
+# Dependências e pacotes (o mais importante!)
+/node_modules/
+
+# Arquivos de log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Arquivos de ambiente - NUNCA adicione chaves de API ou senhas ao Git!
+.env
+.env.local
+.env.*.local
+
+# Arquivos temporários e de cache
+.tmp/
+.npm
+*.tsbuildinfo
+
+# Arquivos de configuração de IDEs e editores
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.iml
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
