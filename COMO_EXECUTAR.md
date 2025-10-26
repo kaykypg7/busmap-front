@@ -1,10 +1,6 @@
-# 🚀 Como Executar o Projeto
+# Olá a todos, utilizei IA para construção dessa documentação!
 
-## ✅ Configuração do Proxy - RESOLVIDO!
-
-O projeto agora está configurado corretamente para redirecionar as requisições do frontend (porta 4200) para o backend (porta 8080).
-
----
+## 🚀 Como Executar o Projeto
 
 ## 📋 Passo a Passo
 
