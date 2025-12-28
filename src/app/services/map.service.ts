@@ -140,7 +140,7 @@ export class MapService {
     /**
      * Retorna a quantidade de marcadores no mapa
      */
-    obterQuantidadeMarcadores(): number {
+    obterQuantidade(): number {
         return this.marcadores.length;
     }
 }

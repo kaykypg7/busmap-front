@@ -1,54 +1,21 @@
 <div class="container">
-  <header class="app-header">
-    <h1>{{ title }}</h1>
-    <p class="subtitle">Acompanhe os ônibus em tempo real</p>
-  </header>
+  <app-header [title]="title" subtitle="Acompanhe os ônibus em tempo real"></app-header>
 
   <div class="busca-section">
-    <div class="input-group">
-      <input type="text" [(ngModel)]="termoBusca" placeholder="Digite o número da linha (ex: 8000) ou bairro..."
-        (keyup.enter)="buscarLinhas()" [disabled]="carregando" class="busca-input">
-      <button type="button" (click)="buscarLinhas()" [disabled]="!termoBusca || carregando || !mapaCarregado"
-        class="busca-button">
-        <span *ngIf="!carregando">🔍 Buscar Ônibus</span>
-        <span *ngIf="carregando">⏳ Buscando...</span>
-      </button>
-    </div>
+    <app-search-bar [(termoBusca)]="termoBusca" [carregando]="carregando" [mapaCarregado]="mapaCarregado"
+      (buscar)="buscarLinhas()">
+    </app-search-bar>
 
-    <div class="info-bar" *ngIf="mapaCarregado">
-      <span class="status-item">
-        📍 {{ mapService.obterQuantidadeMarcadores() }} ônibus no mapa
-      </span>
-      <span class="status-item" *ngIf="totalBuscas > 0">
-        🔍 {{ totalBuscas }} busca(s) realizadas
-      </span>
-      <button *ngIf="mapService.obterQuantidadeMarcadores() > 0" (click)="removerMarcadores()" class="clear-button">
-        🗑️ Limpar
-      </button>
-    </div>
+    <app-info-bar [quantidadeMarcadores]="mapService.obterQuantidadeMarcadores()" [totalBuscas]="totalBuscas"
+      [mapaCarregado]="mapaCarregado" (limparMarcadores)="removerMarcadores()">
+    </app-info-bar>
   </div>
 
-  <div class="mapa-container">
-    <div id="map" class="mapa-elemento"></div>
-
-    <!-- Loading overlay -->
-    <div *ngIf="carregando" class="loading-overlay">
-      <div class="loading-content">
-        <div class="spinner"></div>
-        <p>Buscando ônibus...</p>
-      </div>
-    </div>
-
-    <!-- Mensagem quando mapa não carregou -->
-    <div *ngIf="!mapaCarregado" class="mapa-loading">
-      <div class="loading-content">
-        <div class="spinner"></div>
-        <p>Carregando mapa...</p>
-      </div>
-    </div>
-  </div>
+  <app-map [carregando]="carregando" [mapaCarregado]="mapaCarregado">
+  </app-map>
 
   <div class="debug-info" *ngIf="!mapaCarregado || ultimoErro">
+
     <div *ngIf="!mapaCarregado" class="debug-item">
       ⚠️ Mapa ainda não carregou
     </div>

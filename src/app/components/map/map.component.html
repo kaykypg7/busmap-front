@@ -1,0 +1,19 @@
+<div class="mapa-container">
+    <div id="map" class="mapa-elemento"></div>
+
+    <!-- Loading overlay -->
+    <div *ngIf="carregando" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Buscando ônibus...</p>
+        </div>
+    </div>
+
+    <!-- Mensagem quando mapa não carregou -->
+    <div *ngIf="!mapaCarregado" class="mapa-loading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Carregando mapa...</p>
+        </div>
+    </div>
+</div>

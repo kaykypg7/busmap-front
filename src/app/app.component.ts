@@ -4,11 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { SptransService } from './app.service';
 import { MapService } from './services/map.service';
 import { BusDataService } from './services/bus-data.service';
+import { HeaderComponent } from './components/header/header.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { MapComponent } from './components/map/map.component';
+import { InfoBarComponent } from './components/info-bar/info-bar.component';
 
 /**
  * 🚌 COMPONENTE PRINCIPAL DO APP
  * 
- * Coordena a interação entre os serviços:
+ * Coordena a interação entre os componentes e serviços:
+ * - HeaderComponent, SearchBarComponent, MapComponent, InfoBarComponent
  * - MapService: Gerencia o mapa Leaflet
  * - BusDataService: Processa dados de ônibus
  * - SptransService: Comunicação com API
@@ -16,7 +21,14 @@ import { BusDataService } from './services/bus-data.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    SearchBarComponent,
+    MapComponent,
+    InfoBarComponent
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -50,7 +62,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }, 100);
   }
 
-  
+
   private inicializarMapa(): void {
     const resultado = this.mapService.criarMapa();
 

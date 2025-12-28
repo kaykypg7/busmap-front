@@ -1,0 +1,38 @@
+.info-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f7fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.status-item {
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #4a5568;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.clear-button {
+    margin-left: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e53e3e;
+    background: white;
+    border: 2px solid #e53e3e;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-button:hover {
+    background: #e53e3e;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+}

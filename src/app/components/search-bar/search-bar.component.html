@@ -1,0 +1,11 @@
+<div class="input-group">
+    <input type="text" [ngModel]="termoBusca" (ngModelChange)="onTermoBuscaChange($event)"
+        placeholder="Digite o número da linha (ex: 8000) ou bairro..." (keyup.enter)="onBuscar()"
+        [disabled]="carregando" class="busca-input">
+
+    <button type="button" (click)="onBuscar()" [disabled]="!termoBusca || carregando || !mapaCarregado"
+        class="busca-button">
+        <span *ngIf="!carregando">🔍 Buscar Ônibus</span>
+        <span *ngIf="carregando">⏳ Buscando...</span>
+    </button>
+</div>

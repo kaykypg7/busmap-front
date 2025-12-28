@@ -1,0 +1,11 @@
+<div class="info-bar" *ngIf="mapaCarregado">
+    <span class="status-item">
+        📍 {{ quantidadeMarcadores }} ônibus no mapa
+    </span>
+    <span class="status-item" *ngIf="totalBuscas > 0">
+        🔍 {{ totalBuscas }} busca(s) realizadas
+    </span>
+    <button *ngIf="quantidadeMarcadores > 0" (click)="onLimpar()" class="clear-button">
+        🗑️ Limpar
+    </button>
+</div>
