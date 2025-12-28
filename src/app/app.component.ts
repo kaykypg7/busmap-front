@@ -125,7 +125,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     console.log('📊 RESULTADO FINAL:');
     console.log(`  Linhas processadas: ${linhasProcessadas}`);
     console.log(`  Total de ônibus: ${totalOnibus}`);
-    console.log(`  Marcadores no mapa: ${this.mapService.obterQuantidadeMarcadores()}`);
+    console.log(`  Marcadores no mapa: ${this.mapService.obterQuantidade()}`);
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
 
     if (totalOnibus > 0) {

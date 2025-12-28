@@ -6,7 +6,7 @@
       (buscar)="buscarLinhas()">
     </app-search-bar>
 
-    <app-info-bar [quantidadeMarcadores]="mapService.obterQuantidadeMarcadores()" [totalBuscas]="totalBuscas"
+    <app-info-bar [quantidadeMarcadores]="mapService.obterQuantidade()" [totalBuscas]="totalBuscas"
       [mapaCarregado]="mapaCarregado" (limparMarcadores)="removerMarcadores()">
     </app-info-bar>
   </div>
