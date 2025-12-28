@@ -17,12 +17,12 @@
 
     <div class="info-bar" *ngIf="mapaCarregado">
       <span class="status-item">
-        📍 {{ marcadoresOnibus.length }} ônibus no mapa
+        📍 {{ mapService.obterQuantidadeMarcadores() }} ônibus no mapa
       </span>
       <span class="status-item" *ngIf="totalBuscas > 0">
         🔍 {{ totalBuscas }} busca(s) realizadas
       </span>
-      <button *ngIf="marcadoresOnibus.length > 0" (click)="removerMarcadores()" class="clear-button">
+      <button *ngIf="mapService.obterQuantidadeMarcadores() > 0" (click)="removerMarcadores()" class="clear-button">
         🗑️ Limpar
       </button>
     </div>
@@ -48,7 +48,6 @@
     </div>
   </div>
 
-  <!-- Debug info (remova em produção) -->
   <div class="debug-info" *ngIf="!mapaCarregado || ultimoErro">
     <div *ngIf="!mapaCarregado" class="debug-item">
       ⚠️ Mapa ainda não carregou

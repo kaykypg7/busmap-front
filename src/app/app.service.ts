@@ -4,29 +4,16 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
-/**
- * 📚 SERVIÇO DA API SPTRANS
- * 
- * Serviço para integração com a API SPTrans
- * 
- * Exemplo de uso:
- * 
- * // Buscar linhas
- * this.sptransService.buscarLinhas('8000').subscribe(linhas => {
- *     console.log('Linhas encontradas:', linhas);
- * });
- * 
- * // Buscar posições
- * this.sptransService.buscarPosicoes('1145').subscribe(posicoes => {
- *     console.log('Posições:', posicoes);
- * });
- * 
- * // Busca inteligente (linhas + posições)
- * this.sptransService.buscarPosicoesInteligente('8000').subscribe(resultado => {
- *     console.log('Linha:', resultado.linha);
- *     console.log('Posições:', resultado.posicoes);
- * });
- */
+
+// IMPORTANTE!
+
+//obs: o numero da linha não é o mesmo do codigo da linha(CL)
+
+// codigo da linha é obtido nos parametros do get do numero da linha
+
+// o codigo da linha tras as coordenadas
+
+
 @Injectable({ providedIn: 'root' })
 export class SptransService {
 
@@ -37,19 +24,11 @@ export class SptransService {
      * PRODUÇÃO: 'https://busmap-back.onrender.com'
      */
     private baseURL = environment.apiUrl;
-
-    /**
-     * O HttpClient é uma ferramenta do Angular para fazer requisições HTTP
-     * Ele é injetado automaticamente no construtor
-     */
     constructor(private http: HttpClient) {
         console.log('🌍 Ambiente:', environment.production ? 'PRODUÇÃO' : 'DESENVOLVIMENTO');
         console.log('📡 API URL:', this.baseURL);
     }
 
-  
-    //  Faz login na API SPTrans
-   
     login(): Observable<boolean> {
         const url = `${this.baseURL}/login`;
         console.log('🔐 Fazendo login...');
@@ -62,16 +41,6 @@ export class SptransService {
         );
     }
 
-    /**
-     *  BUSCAR LINHAS DE ÔNIBus
-     * this.sptransService.buscarLinhas('8000').subscribe(linhas => {
-     *     console.log('Linhas encontradas:', linhas);
-     * });
-     * ```
-     * 
-     * @param termo - O texto para buscar (ex: '8000', 'Lapa', 'Pinheiros')
-     * @returns Observable com array de linhas encontradas
-     */
     buscarLinhas(termo: string): Observable<any[]> {
         const url = `${this.baseURL}/linhas?termo=${encodeURIComponent(termo)}`;
         console.log('🔍 Buscando linhas:', termo);
@@ -84,15 +53,7 @@ export class SptransService {
         );
     }
 
-    /**
-     * BUSCAR POSIÇÕES DOS ÔNIBUS
-     * ```
-     * 
-     * @param codigoLinha - Código da linha (ex: '1145', '2506', '8000-10')
-     * @returns Observable com objeto contendo:
-     *          - hr: horário da última atualização
-     *          - vs: array de veículos com coordenadas (px=longitude, py=latitude)
-     */
+
     buscarPosicoes(codigoLinha: string | number): Observable<any> {
         const url = `${this.baseURL}/Posicao/Linha?codigoLinha=${encodeURIComponent(codigoLinha)}`;
         console.log('📍 Buscando posições da linha:', codigoLinha);
@@ -105,30 +66,7 @@ export class SptransService {
         );
     }
 
-    /**
-     * 🎯 BUSCA INTELIGENTE
-     * 
-     * Encontra a linha pelo termo e retorna as posições automaticamente
-     * Combina buscarLinhas() + buscarPosicoes() em uma única chamada
-     * 
-     * Exemplo de uso:
-     * ```
-     * this.sptransService.buscarPosicoesInteligente('8000').subscribe({
-     *     next: (resultado) => {
-     *         console.log('Linha:', resultado.linha);
-     *         console.log('Ônibus:', resultado.posicoes.vs);
-     *     },
-     *     error: (erro) => {
-     *         console.error('Erro:', erro);
-     *     }
-     * });
-     * ```
-     * 
-     * @param termo - Termo de busca da linha (ex: '8000', 'Lapa')
-     * @returns Observable com objeto contendo:
-     *          - linha: informações da linha encontrada
-     *          - posicoes: objeto com hr e vs (veículos)
-     */
+
     buscarPosicoesInteligente(termo: string): Observable<any> {
         console.log('🎯 Busca inteligente para:', termo);
 
@@ -170,17 +108,6 @@ export class SptransService {
 
     /**
      * ✅ VERIFICAR STATUS
-     * 
-     * Verifica o status da autenticação da API
-     * 
-     * Exemplo de uso:
-     * ```
-     * this.sptransService.verificarStatus().subscribe(status => {
-     *     console.log('Status:', status);
-     * });
-     * ```
-     * 
-     * @returns Observable com status da API
      */
     verificarStatus(): Observable<any> {
         const url = `${this.baseURL}/status`;
@@ -194,16 +121,7 @@ export class SptransService {
         );
     }
 
-    // ========================================
-    // MÉTODOS AUXILIARES (opcional)
-    // ========================================
-
-    /**
-     * � DEBUG: Mostra a estrutura de uma linha
-     * Use este método para ver quais campos estão disponíveis
-     * 
-     * @param termo - Termo de busca
-     */
+ 
     debugEstruturaDaLinha(termo: string): Observable<any> {
         return this.buscarLinhas(termo).pipe(
             map(linhas => {
@@ -234,12 +152,7 @@ export class SptransService {
         );
     }
 
-    /**
-     * �📊 Buscar todas as posições de múltiplas linhas
-     * 
-     * @param termo - Termo de busca
-     * @returns Observable com array de linhas e suas posições
-     */
+
     buscarTodasPosicoes(termo: string): Observable<any[]> {
         console.log('� Buscando todas as posições para:', termo);
 
@@ -272,12 +185,6 @@ export class SptransService {
                     );
                 });
 
-                // Retorna todos os resultados
-                // Nota: Para melhor performance, use forkJoin para requisições paralelas
-                // import { forkJoin } from 'rxjs';
-                // return forkJoin(requisicoesDeposicoes);
-
-                // Por enquanto, retorna sequencialmente
                 return of(requisicoesDeposicoes);
             }),
             catchError(erro => {
@@ -287,31 +194,3 @@ export class SptransService {
         );
     }
 }
-
-/**
- * �💡 DICAS PARA INICIANTES:
- * 
- * 1. Observable vs Promise:
- *    - Observable é como uma "torneira de dados"
- *    - Você se "inscreve" (subscribe) para receber os dados
- *    - É mais poderoso que Promise para requisições HTTP
- * 
- * 2. pipe() e operadores:
- *    - pipe() permite encadear operações no Observable
- *    - catchError() captura erros e permite tratar eles
- *    - switchMap() troca de um Observable para outro
- *    - map() transforma os dados
- *    - of() cria um Observable com um valor fixo
- * 
- * 3. Por que retornar dados vazios no erro?
- *    - Para não quebrar a aplicação
- *    - O componente sempre recebe algo (mesmo que vazio)
- *    - Melhor que deixar a aplicação travar
- * 
- * 4. Estrutura de dados da API SPTrans:
- *    - Linhas: array de objetos { c/cl: código, sl: sentido, ... }
- *    - Posições: { hr: horário, vs: [{ px: lng, py: lat, ta: hora, ... }] }
- * 
- * 5. Como usar Async/Await:
- *    const linhas = await this.sptransService.buscarLinhas('8000').toPromise();
- */

@@ -207,7 +207,7 @@ Se você quiser mudar a porta do backend, basta editar `proxy.conf.json`:
 ```json
 {
     "/api": {
-        "target": "http://localhost:3000",  // <- Nova porta
+        "target": "http://localhost:3000", 
         "secure": false,
         "changeOrigin": true,
         "logLevel": "info"

@@ -5,7 +5,7 @@
 /coverage/
 /.firebase/
 
-# Dependências e pacotes (o mais importante!)
+
 /node_modules/
 
 # Arquivos de log
@@ -16,17 +16,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Arquivos de ambiente - NUNCA adicione chaves de API ou senhas ao Git!
+
 .env
 .env.local
 .env.*.local
 
-# Arquivos temporários e de cache
+
 .tmp/
 .npm
 *.tsbuildinfo
 
-# Arquivos de configuração de IDEs e editores
 .idea/
 .project
 .classpath
